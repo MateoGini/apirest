@@ -8,7 +8,7 @@ class CocaModel{
     }
     
     public function getAll(){
-        $query = $this->db->prepare("SELECT * FROM pedidos INNER JOIN tipos ON pedidos.envase=tipos.id_envase");
+        $query = $this->db->prepare("SELECT * FROM pedidos");
         $query->execute();
 
         $cocacola = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
@@ -16,7 +16,7 @@ class CocaModel{
         return $cocacola;
     }
     public  function insert($tipo_coca, $envase, $stock){
-        $query= $this->db->prepare("INSERT INTO pedidos (tipo_coca, envase, stock) VALUES (?, ?, ?)");
+        $query = $this->db->prepare("INSERT INTO pedidos (tipo_coca, envase, stock) VALUES (?, ?, ?)");
         $query->execute([$tipo_coca, $envase, $stock]);   
         return $this->db->lastInsertId();
      
