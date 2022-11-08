@@ -34,7 +34,6 @@ class CocaController {
                 if($_GET['sortby'] == 'stock')
                 $cocacola = $this->model->orderDESC();//?sortby=stock&order=DESC
             }
-        if (isset($_GET['page'])
         }
         else{
         $cocacola = $this->model->getAll();
