@@ -24,11 +24,24 @@ class CocaController {
             return json_decode($this->data);
         }
    
-    public function showAll($params = NULL) {
+    public function showAll($params = NULL){
+        if (isset($_GET['sortby']) && isset($_GET['order'])){
+            if($_GET['order'] == 'ASC'){
+                if($_GET['sortby'] == 'stock')
+                $cocacola = $this->model->orderASC();//?sortby=stock&order=ASC
+                }
+            elseif ($_GET['order'] == 'DESC'){
+                if($_GET['sortby'] == 'stock')
+                $cocacola = $this->model->orderDESC();//?sortby=stock&order=DESC
+            }
+        if (isset($_GET['page'])
+        }
+        else{
         $cocacola = $this->model->getAll();
+        }
         return $this->view->response($cocacola, 200);
-
-    }
+        
+    }  
    
     // muestra por detalle el producto seleccionado
     public function showProduct($params = NULL) {

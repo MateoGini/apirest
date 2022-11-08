@@ -15,6 +15,26 @@ class CocaModel{
         
         return $cocacola;
     }
+    public function orderASC(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY stock ASC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function orderDESC(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY stock DESC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function pagination(){
+        $query = $this->db->prepare("SELECT * FROM pedidos LIMIT 5");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    
+    }
+
     public  function insert($tipo_coca, $envase, $stock){
         $query = $this->db->prepare("INSERT INTO pedidos (tipo_coca, envase, stock) VALUES (?, ?, ?)");
         $query->execute([$tipo_coca, $envase, $stock]);   
