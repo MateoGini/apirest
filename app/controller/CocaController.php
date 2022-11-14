@@ -25,22 +25,54 @@ class CocaController {
         }
    
     public function showAll($params = NULL){
+        try{
         if (isset($_GET['sortby']) && isset($_GET['order'])){
-            if($_GET['order'] == 'ASC'){
-                if($_GET['sortby'] == 'stock')
-                $cocacola = $this->model->orderASC();//?sortby=stock&order=ASC
+            if  ($_GET['sortby'] == 'stock'){
+                    if ($_GET['order'] == 'DESC'){
+                    $cocacola = $this->model->orderDESCstock();//?sortby=stock&order=DESC
+                    }
+                    elseif ($_GET['order'] == 'ASC'){
+                    $cocacola = $this->model->orderASCstock();//?sortby=stock&order=DESC
+                    }
                 }
-            elseif ($_GET['order'] == 'DESC'){
-                if($_GET['sortby'] == 'stock')
-                $cocacola = $this->model->orderDESC();//?sortby=stock&order=DESC
+            elseif($_GET['sortby'] == 'id'){
+                    if ($_GET['order'] == 'DESC'){
+                    $cocacola = $this->model->orderDESCid();//?sortby=id&order=DESC
+                    }
+                    elseif ($_GET['order'] == 'ASC'){
+                    $cocacola = $this->model->orderASCid();//?sortby=id&order=DESC
+                    }
+                }
+            elseif($_GET['sortby'] == 'tipococa'){
+                    if ($_GET['order'] == 'DESC'){
+                    $cocacola = $this->model->orderDESCtipo();//?sortby=tipo&order=DESC
+                    }
+                     elseif ($_GET['order'] == 'ASC'){
+                    $cocacola = $this->model->orderASCtipo();//?sortby=tipo&order=ASC
+                    }
+                }
+            elseif($_GET['sortby'] == 'envase'){
+                    if ($_GET['order'] == 'DESC'){
+                        $cocacola = $this->model->orderDESCenvase();//?sortby=envase&order=DESC
+                    }
+                    elseif ($_GET['order'] == 'ASC'){
+                    $cocacola = $this->model->orderASCenvase();//?sortby=envase&order=ASC
+                    }
+                }
             }
+        elseif(isset($_GET['filterByType'])){
+         $cocacola = $this->model->ShowByType($_GET['filterByType']);//?filterByType=tipo
         }
         else{
         $cocacola = $this->model->getAll();
         }
-        return $this->view->response($cocacola, 200);
-        
-    }  
+         return  $this->view->response($cocacola, 200);
+     }
+    catch(Exception $e){
+       $this->view->response("Error en la url", 404);
+    }
+}
+
    
     // muestra por detalle el producto seleccionado
     public function showProduct($params = NULL) {
@@ -75,34 +107,5 @@ class CocaController {
     else
     $this->view->response("La tarea con el id=$id no existe", 404);
         }
-
-
-      public function showFormEdit($id_stock){
-        $this->checkLoggedIn();
-        $cocacolas= $this->model->getID($id_stock);
-        $tipo = $this->model_type->getEnvase();  
-        $this->view->showFormEdit($tipo, $cocacolas);
-      }
-
-     public function EditStock(){
-        $this->checkLoggedIn();
-      
-            $id_stock = $_POST['id_stock'];
-            $tipo_coca = $_POST['tipo_coca'];
-            $envase = $_POST['envase'];
-            $stock = $_POST['stock'];
-
-            $this->model->EditStock($tipo_coca,$envase,$stock,$id_stock);
-            header("Location: " . BASE_URL .""); 
-
-        }
-    
-public function checkLoggedIn() {
-    if (!isset($_SESSION['IS_LOGGED'])) {
-        header("Location: " . BASE_URL . '/login');
-        die();
     }
-} 
-}
-
 

@@ -15,26 +15,60 @@ class CocaModel{
         
         return $cocacola;
     }
-    public function orderASC(){
+    public function orderASCstock(){
         $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY stock ASC");
         $query->execute();
         $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
         return $cocacola;
     }
-    public function orderDESC(){
+    public function orderDESCstock(){
         $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY stock DESC");
         $query->execute();
         $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
         return $cocacola;
     }
-    public function pagination(){
-        $query = $this->db->prepare("SELECT * FROM pedidos LIMIT 5");
+    public function orderASCid(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY id ASC");
         $query->execute();
         $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
         return $cocacola;
-    
     }
-
+    public function orderDESCid(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY id DESC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function orderASCtipo(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY tipo_coca ASC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function orderDESCtipo(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY tipo_coca DESC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function orderASCenvase(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY envase ASC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function orderDESCenvase(){
+        $query = $this->db->prepare("SELECT * FROM pedidos ORDER BY envase DESC");
+        $query->execute();
+        $cocacola = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
+    public function ShowByType($envase){
+        $query = $this->db->prepare("SELECT * FROM pedidos WHERE envase = ?");
+        $query->execute([$envase]);
+        $cocacola= $query->fetchAll(PDO::FETCH_OBJ);
+        return $cocacola;
+    }
     public  function insert($tipo_coca, $envase, $stock){
         $query = $this->db->prepare("INSERT INTO pedidos (tipo_coca, envase, stock) VALUES (?, ?, ?)");
         $query->execute([$tipo_coca, $envase, $stock]);   
@@ -51,8 +85,4 @@ class CocaModel{
         $cocacolas = $query->fetch(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
         return $cocacolas;
     }
-    public function EditStock($tipo_coca,$envase,$stock,$id_stock){
-        $query = $this->db->prepare("UPDATE pedidos SET tipo_coca= ? ,envase=?,stock=? WHERE id_stock = ? ");
-         $query->execute(array($tipo_coca,$envase,$stock,$id_stock));
-        }
 }
