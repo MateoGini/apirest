@@ -1,9 +1,13 @@
 Base URL: www.localhost/web2/tpe-rest/api
 
 Endpoints:
+
 METHOD/URL
+
 GET/cocas	
+
 GET/cocas/:ID
+
 POST/cocas  
 body:{
         "tipo_coca": "tipo_coca",
@@ -11,7 +15,7 @@ body:{
         "stock": stock
     }
 
-DELETE/cocas/:id	
+DELETE/cocas/:ID	
 
 SORTING
 
